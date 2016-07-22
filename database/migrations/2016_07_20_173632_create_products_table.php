@@ -13,7 +13,7 @@ class CreateProductsTable extends Migration
     public function up()
     {
         Schema::create('products', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->unsigned();;
             $table->integer('category_id')->unsigned();
             $table->foreign('category_id')->references('id')->on('categories');
             $table->string('name');
@@ -30,6 +30,8 @@ class CreateProductsTable extends Migration
      */
     public function down()
     {
+        Schema::drop('users');
+        Schema::drop('categories');
         Schema::drop('products');
     }
 }

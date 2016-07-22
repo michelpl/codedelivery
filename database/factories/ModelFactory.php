@@ -35,10 +35,10 @@ $factory->define(CodeDelivery\Models\Product::class, function (Faker\Generator $
 
 $factory->define(CodeDelivery\Models\Client::class, function (Faker\Generator $faker) {
     return [
-        'phone' => $faker->numberBetween(555555555,99999999),
-        'adress' => $faker->string(),
-        'city' => $faker->string(),
-        'state' => $faker->string(),
-        'zipcode' => $faker->numberBetween(11111111,99999999)
+        'phone' => $faker->phoneNumber,
+        'adress' => $faker->address,
+        'city' => $faker->city,
+        'state' => $faker->state,
+        'zipcode' => $faker->postcode
     ];
 });
