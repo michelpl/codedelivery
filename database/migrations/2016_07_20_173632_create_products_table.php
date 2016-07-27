@@ -30,8 +30,8 @@ class CreateProductsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('users');
-        Schema::drop('categories');
-        Schema::drop('products');
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+        Schema::dropIfExists('products');
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }

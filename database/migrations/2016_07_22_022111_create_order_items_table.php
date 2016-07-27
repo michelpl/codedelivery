@@ -31,9 +31,8 @@ class CreateOrderItemsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('products');
-        Schema::drop('orders');
-        Schema::drop('users');
+        
+        
         Schema::drop('order_items');
     }
 }

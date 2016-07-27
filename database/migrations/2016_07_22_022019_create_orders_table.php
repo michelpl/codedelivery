@@ -31,8 +31,6 @@ class CreateOrdersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('clients');
-        Schema::drop('users');
         Schema::drop('orders');
     }
 }
