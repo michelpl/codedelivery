@@ -2,20 +2,19 @@
 
 namespace CodeDelivery\Http\Controllers;
 
-use Illuminate\Http\Request;
+use CodeDelivery\Repositories\CategoryRepository;
 
-use CodeDelivery\Http\Requests;
 use CodeDelivery\Http\Controllers\Controller;
 
 class CategoriesController extends Controller
 {
-    public function index() {
-        $nome = "Michel";
-        $linguagens = [
-          'PHP'
-          ,'JAVA'
-        ];
-        return view("admin.categories.index", compact('nome', 'linguagens'));
-        
+    public function index(CategoryRepository $repository) {
+        $categories = $repository->paginate(5);
+        return view("admin.categories.index", compact('categories'));
+    }
+    
+    public function create(CategoryRepository $repository) {
+        $categories = $repository->paginate(5);
+        return view("admin.categories.create", compact('categories'));
     }
 }

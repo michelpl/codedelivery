@@ -1,14 +1,32 @@
 @extends('app')
 
 @section('content')
-
-    <h1>Categorias.</h1>
-    <h2>{{$nome}}</h2>
+    <div class="container">
+        <h3>Categorias</h3>
+        
+        
+        <p><a href="{{route('admin.categories.create')}}" class="btn btn-default">Nova categoria</a></p>
+        <br>
+        <table class="table table-bordered">
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Ação</th>
+            </tr>
+            
+            <tbody>
+                @foreach($categories as $category)
+                    <tr>
+                        <td>{{$category->id}}</td>
+                        <td>{{$category->name}}</td>
+                        <td><a href="#" class="btn btn-primary">Editar</a></td>
+                    </tr>
+                @endforeach
+                
+            </tbody>
+        </table>
+        {!! $categories->render() !!}
+    </div>
     
-    <ul>
-        @foreach($linguagens as $linguagem)
-            <li>{{$linguagem}}</li>
-        @endforeach
-    </ul>
 
 @endsection
