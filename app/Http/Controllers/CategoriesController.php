@@ -10,7 +10,12 @@ use CodeDelivery\Http\Controllers\Controller;
 class CategoriesController extends Controller
 {
     public function index() {
-        return view("admin.categories.index");
+        $nome = "Michel";
+        $linguagens = [
+          'PHP'
+          ,'JAVA'
+        ];
+        return view("admin.categories.index", compact('nome', 'linguagens'));
         
     }
 }
