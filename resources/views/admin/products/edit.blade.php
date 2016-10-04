@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h3>Editando categoria {{$category->name}}</h3>
+        <h3>Editando produto {{$category->name}}</h3>
         
             @include('errors._check')
             {!! Form::model($category,['route' => ['admin.categories.update', $category->id]]) !!}
