@@ -19,7 +19,7 @@
                     <tr>
                         <td>{{$category->id}}</td>
                         <td>{{$category->name}}</td>
-                        <td><a href="#" class="btn btn-primary">Editar</a></td>
+                        <td><a href="{{route('admin.categories.edit',['id' =>$category->id])}}" class="btn btn-primary">Editar</a></td>
                     </tr>
                 @endforeach
                 
