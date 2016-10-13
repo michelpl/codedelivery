@@ -25,7 +25,7 @@ class AdminUserRequest extends Request
     {
         return [
             'name' => 'required|min:3'
-            ,'email' => 'required|exists|email'
+            ,'email' => 'required|email'
             ,'password' => 'required'
         ];
     }

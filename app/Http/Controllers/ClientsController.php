@@ -3,12 +3,9 @@
 namespace CodeDelivery\Http\Controllers;
 
 use CodeDelivery\Http\Requests;
-use CodeDelivery\Http\Requests\AdminCategoryRequest;
-use CodeDelivery\Http\Requests\AdminProductRequest;
+use CodeDelivery\Http\Requests\AdminUserRequest;
 use CodeDelivery\Http\Requests\AdminClientRequest;
-use CodeDelivery\Repositories\CategoryRepository;
 use CodeDelivery\Repositories\ClientRepository;
-use CodeDelivery\Repositories\ProductRepository;
 use CodeDelivery\Http\Controllers\Controller;
 use CodeDelivery\Repositories\UserRepository;
 
@@ -22,6 +19,7 @@ class ClientsController extends Controller
     }
     
     public function index() {
+        echo php_ini_loaded_file();
         $clients = $this->repository->paginate();
         return view("admin.clients.index", compact('clients'));
     }
@@ -33,10 +31,12 @@ class ClientsController extends Controller
         $client = $this->repository->find($id);
         return view("admin.client.edit", compact('client'));
     }
-    public function store(Requests\AdminUserRequest $userRequest, AdminClientRequest $clientRequest) {
+    public function store(AdminClientRequest $clientRequest) {
 
-        $userData = $userRequest->all();
-        $this->userRepository->create($userData);
+        $data = $clientRequest->all();
+        $user = $this->userRepository->create($data);
+        $data['user_id'] =$user->id;
+        $this->repository->create($data);
         return redirect()->route("admin.clients.index");
                 
     }
