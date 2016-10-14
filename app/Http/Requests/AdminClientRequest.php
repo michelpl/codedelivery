@@ -25,6 +25,7 @@ class AdminClientRequest extends Request
     {
         return [
             'name' => 'required'
+            ,'password' => 'required'
         ];
     }
 }

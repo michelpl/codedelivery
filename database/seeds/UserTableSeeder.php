@@ -28,7 +28,7 @@ class UserTableSeeder extends Seeder
         ]);
 
 
-        factory(User::Class, 10)->create()->each(function($u){
+        factory(User::Class, 5)->create()->each(function($u){
             $u->client()->save(factory(Client::class)->make());
         });
     }

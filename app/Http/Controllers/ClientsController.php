@@ -19,7 +19,6 @@ class ClientsController extends Controller
     }
     
     public function index() {
-        echo php_ini_loaded_file();
         $clients = $this->repository->paginate();
         return view("admin.clients.index", compact('clients'));
     }
@@ -29,21 +28,21 @@ class ClientsController extends Controller
     }
     public function edit($id) {
         $client = $this->repository->find($id);
-        return view("admin.client.edit", compact('client'));
+        return view("admin.clients.edit", compact('client'));
     }
     public function store(AdminClientRequest $clientRequest) {
-
         $data = $clientRequest->all();
         $user = $this->userRepository->create($data);
-        $data['user_id'] =$user->id;
+        $data['user_id'] = $user->id;
         $this->repository->create($data);
         return redirect()->route("admin.clients.index");
-                
     }
     public function update(AdminClientRequest $request, $id) {
-        
         $data = $request->all();
-        $this->repository->update($data, $id);
+        $data['password'] = bcrypt($data['password']);
+        $client = $this->repository->update($data, $id);
+        $this->userRepository->update($data, $client->user_id);
+
         return redirect()->route("admin.clients.index");
                 
     }
