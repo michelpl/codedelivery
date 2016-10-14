@@ -24,7 +24,7 @@ class AdminOrderRequest extends Request
     public function rules()
     {
         return [
-            'client_id' => 'required'
+            'status' => 'required'
         ];
     }
 }

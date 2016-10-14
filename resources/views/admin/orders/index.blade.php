@@ -10,16 +10,19 @@
         <table class="table table-bordered">
             <tr>
                 <th>Id</th>
+                <th>Cliente</th>
+                <th>Status</th>
+                <th>Ações</th>
             </tr>
             
             <tbody>
-
                 @foreach($orders as $order)
                     <tr>
                         <td>{{$order->id}}</td>
+                        <td>{{$order->client->name}}</td>
+                        <td>{{$status[$order->status]}}</td>
                         <td>
                             <a href="{{route('admin.orders.edit',['id' =>$order->id])}}" class="btn btn-primary">Editar</a>
-                            <a href="{{route('admin.orders.destroy',['id' =>$order->id])}}" class="btn btn-primary">Excluir</a>
                         </td>
                     </tr>
                 @endforeach

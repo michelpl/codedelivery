@@ -3,27 +3,17 @@
 @section('content')
     <div class="container">
         <h3>Editando pedido {{$order->id}}</h3>
-        
-            @include('errors._check')
-            {!! Form::model($order,['route' => ['admin.orders.update', $order->id]]) !!}
-            @include('admin.orders._form')
-            <div class="form-group">
-                {!! Form::label('Name', 'Cliente')  !!}
-                {!! Form::text('client',$order->client->name, ['class' => 'form-control', 'disabled'=>'disabled'])  !!}
-            </div>
-            {!! Form::close() !!}
-        
-    </div>
-    <div class="container">
+
+        @include('errors._check')
+        {!! Form::model($order,['route' => ['admin.orders.update', $order->id]]) !!}
+        @include('admin.orders._form')
+
+
         <h3>Itens do pedido</h3>
 
 
         <p><a href="{{route('admin.orders.create')}}" class="btn btn-default">Novo item</a></p>
         <br>
-        <pre>
-
-        {{print_r($order->product)}}
-        </pre>
         <table class="table table-bordered">
             <tr>
                 <th>Id</th>
@@ -50,6 +40,10 @@
             </tr>
             </tbody>
         </table>
+        <div class="form-group">
+            {!! Form::submit('Salvar', ['class' => 'btn btn-primary', 'value' => 'Salvar'])  !!}
+        </div>
+        {!! Form::close() !!}
 
     </div>
     

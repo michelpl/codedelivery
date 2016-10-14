@@ -3,6 +3,7 @@
 namespace CodeDelivery\Http\Controllers;
 
 use CodeDelivery\Http\Requests;
+use CodeDelivery\Http\Requests\AdminOrderRequest;
 use CodeDelivery\Http\Requests\AdminUserRequest;
 use CodeDelivery\Http\Requests\AdminClientRequest;
 use CodeDelivery\Repositories\ClientRepository;
@@ -17,11 +18,13 @@ class OrdersController extends Controller
     public function __construct(OrderRepository $repository, UserRepository $userRepository) {
         $this->repository = $repository;
         $this->userRepository = $userRepository;
+        $this->status = ['0'=>'Inativo','1'=>'Ativo'];
     }
     
     public function index() {
         $orders = $this->repository->paginate();
-        return view("admin.orders.index", compact('orders'));
+        $status = $this->status;
+        return view("admin.orders.index", compact('orders', 'status'));
     }
     
     public function create() {
@@ -38,6 +41,7 @@ class OrdersController extends Controller
     }
     public function update(AdminOrderRequest $request, $id) {
         $data = $request->all();
+
         $this->repository->update($data, $id);
         return redirect()->route("admin.orders.index");
     }
