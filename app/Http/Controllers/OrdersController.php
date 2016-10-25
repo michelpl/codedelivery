@@ -4,20 +4,18 @@ namespace CodeDelivery\Http\Controllers;
 
 use CodeDelivery\Http\Requests;
 use CodeDelivery\Http\Requests\AdminOrderRequest;
-use CodeDelivery\Http\Requests\AdminUserRequest;
-use CodeDelivery\Http\Requests\AdminClientRequest;
-use CodeDelivery\Repositories\ClientRepository;
-use CodeDelivery\Repositories\UserRepository;
 use CodeDelivery\Repositories\OrderRepository;
+use CodeDelivery\Repositories\OrderItemRepository;
 use CodeDelivery\Http\Controllers\Controller;
 
 class OrdersController extends Controller
 {
     private $repository;
-    
-    public function __construct(OrderRepository $repository, UserRepository $userRepository) {
+    private $orderItemRepository;
+
+    public function __construct(OrderRepository $repository) {
         $this->repository = $repository;
-        $this->userRepository = $userRepository;
+        //$this->orderItemRepository = $orderItemRepository;
         $this->status = ['0'=>'Inativo','1'=>'Ativo'];
     }
     
@@ -48,6 +46,12 @@ class OrdersController extends Controller
 
     public function destroy($id){
         $this->repository->delete($id);
+        return redirect()->route("admin.orders.index");
+    }
+    public function removeItem($id, $itemId){
+        $order = $this->repository->find($id);
+        $item = $order->items->find($itemId);
+        $item->delete();
         return redirect()->route("admin.orders.index");
     }
 }

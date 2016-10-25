@@ -12,8 +12,9 @@
         <h3>Itens do pedido</h3>
 
 
-        <p><a href="{{route('admin.orders.create')}}" class="btn btn-default">Novo item</a></p>
+        <p><a href="{{route('admin.orders.addItens')}}" class="btn btn-default">Novo item</a></p>
         <br>
+    @if(count($order->items)>0)
         <table class="table table-bordered">
             <tr>
                 <th>Id</th>
@@ -32,6 +33,7 @@
                     <td>{{$item->product->category->name}}</td>
                     <td>{{$item->product->price}}</td>
                     <td class="text-right">{{$item->price}}</td>
+                    <td class="text-right"><a href="{{route('admin.orders.removeItem',['id' => $order->id, 'itemId' =>$item->id])}}">Remover</a></td>
                 </tr>
             @endforeach
             <tr>
@@ -40,12 +42,15 @@
             </tr>
             </tbody>
         </table>
-        <div class="form-group">
-            {!! Form::submit('Salvar', ['class' => 'btn btn-primary', 'value' => 'Salvar'])  !!}
-        </div>
-        {!! Form::close() !!}
-
+    @else
+        <p>Nenhum registro encontrado</p>
+    @endif
+    <div class="form-group">
+        {!! Form::submit('Salvar', ['class' => 'btn btn-primary', 'value' => 'Salvar'])  !!}
     </div>
-    
+    {!! Form::close() !!}
+
+</div>
+
 
 @endsection
