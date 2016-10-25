@@ -51,7 +51,11 @@ Route::group(['prefix'=>'admin','middleware' => 'auth.checkrole', 'as'=>'admin.'
         Route::post('store', ['as' => 'store',  'uses' => 'OrdersController@store']);
         Route::get('destroy/{id}', ['as' => 'destroy',  'uses' => 'OrdersController@destroy']);
         Route::get('newItem/{id}', ['as' => 'newItem',  'uses' => 'OrdersController@newItem']);
+
         Route::get('removeItem/{id}&{itemId}', ['as' => 'removeItem',  'uses' => 'OrdersController@removeItem']);
+    });
+    Route::group(['prefix'=>'orderItems', 'as' => 'orderItems.'], function(){
+        Route::post('store', ['as' => 'store',  'uses' => 'OrderItemsController@store']);
     });
 
 });
