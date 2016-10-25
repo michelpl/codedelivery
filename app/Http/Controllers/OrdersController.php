@@ -6,16 +6,17 @@ use CodeDelivery\Http\Requests;
 use CodeDelivery\Http\Requests\AdminOrderRequest;
 use CodeDelivery\Repositories\OrderRepository;
 use CodeDelivery\Repositories\OrderItemRepository;
+use CodeDelivery\Repositories\ProductRepository;
 use CodeDelivery\Http\Controllers\Controller;
 
 class OrdersController extends Controller
 {
     private $repository;
-    private $orderItemRepository;
+    private $productRepository;
 
-    public function __construct(OrderRepository $repository) {
+    public function __construct(OrderRepository $repository, ProductRepository $productRepository) {
         $this->repository = $repository;
-        //$this->orderItemRepository = $orderItemRepository;
+        $this->productRepository = $productRepository;
         $this->status = ['0'=>'Inativo','1'=>'Ativo'];
     }
     
@@ -48,6 +49,13 @@ class OrdersController extends Controller
         $this->repository->delete($id);
         return redirect()->route("admin.orders.index");
     }
+
+    public function newItem($orderId){
+        $order = $this->repository->find($orderId);
+        $products = $this->productRepository->lists("name","id");
+        return view("admin.orders.orderItem.newItem", compact('order','products'));
+    }
+
     public function removeItem($id, $itemId){
         $order = $this->repository->find($id);
         $item = $order->items->find($itemId);

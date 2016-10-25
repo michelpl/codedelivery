@@ -12,7 +12,7 @@
         <h3>Itens do pedido</h3>
 
 
-        <p><a href="{{route('admin.orders.addItens')}}" class="btn btn-default">Novo item</a></p>
+        <p><a href="{{route('admin.orders.newItem',['id' => $order->id])}}" class="btn btn-default">Novo item</a></p>
         <br>
     @if(count($order->items)>0)
         <table class="table table-bordered">
