@@ -16,6 +16,7 @@ class AdminOrderItemRequest extends Request
         return true;
     }
 
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -24,7 +25,8 @@ class AdminOrderItemRequest extends Request
     public function rules()
     {
         return [
-            'product_id' => 'required'
+            'order_id' => 'required'
         ];
     }
+
 }

@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
 
-        {!! Form::model($order,['route' => ['admin.orderItems.store', $order->id]]) !!}
+        {!! Form::model($order,['route' => ['admin.orderItems.store']]) !!}
             <h3>Adicionar produto ao pedido {{$order->id}}</h3>
             <br>
             @if(count($products)>0)

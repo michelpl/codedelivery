@@ -29,6 +29,7 @@ class OrdersController extends Controller
     }
     
     public function index() {
+        echo  php_ini_loaded_file();
         $orders = $this->repository->paginate();
         $status = $this->status;
         return view("admin.orders.index", compact('orders', 'status'));
@@ -58,18 +59,5 @@ class OrdersController extends Controller
         return redirect()->route("admin.orders.index");
     }
 
-    public function newItem($orderId){
-        $order = $this->repository->find($orderId);
-        $products = $this->productRepository->lists("name","id");
-        return view("admin.orders.orderItem.newItem", compact('order','products'));
-    }
 
-
-
-    public function removeItem($id, $itemId){
-        $order = $this->repository->find($id);
-        $item = $order->items->find($itemId);
-        $item->delete();
-        return redirect()->route("admin.orders.index");
-    }
 }

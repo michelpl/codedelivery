@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use CodeDelivery\Http\Requests;
 use CodeDelivery\Http\Requests\AdminOrderItemRequest;
 use CodeDelivery\Http\Controllers\Controller;
+
 class OrderItemsController extends Controller
 {
     private $repository, $orderRepository, $productRepository;
@@ -20,20 +21,27 @@ class OrderItemsController extends Controller
         $orders = $this->repository->findByField('order_id', $id);
         return view('admin.orders.itens.index', compact('orders', 'idOrder'));
     }
-    public function create($id){
-        $id = $id;
-        $idOrder = $id;
-        $products = $this->productRepository->lists(['name', 'id']);
-        return view('admin.orders.itens.create', compact('products', 'id', 'idOrder'));
+    public function create($orderId){
+        $order = $this->orderRepository->find($orderId);
+        $products = $this->productRepository->lists("name","id");
+        return view("admin.orders.orderItem.newItem", compact('order','products'));
     }
-    public  function store(AdminOrderItemRequest $request, $id){
+    public  function store(AdminOrderItemRequest $request){
         $data = $request->all();
+        $product = $this->productRepository->find($data['product_id']);
+        $data['price'] = $product->price;
+        $data['qtde'] = 1;
         $this->repository->create($data);
-        return redirect()->route('admin.orders.itens.index', $id);
+        $this->updateOrderTotal($data['order_id']);
+
+        return redirect()->route('admin.orders.edit', $data['order_id']);
     }
-    public function destroy($id, $idOrder){
+    public function destroy($id){
+        $item = $this->repository->find($id);
         $this->repository->delete($id);
-        return redirect()->route('admin.orders.itens.index', $idOrder);
+        $this->updateOrderTotal($item->order_id);
+        return redirect()->route('admin.orders.index', $item->order_id);
+
     }
     public function update(AdminOrderItemRequest $request, $id){
         $data = $request->all();
@@ -41,11 +49,24 @@ class OrderItemsController extends Controller
         return redirect()->route('admin.orders.itens.index');
     }
 
-    public function addItem(AdminOrderItemRequest $orderItemRequest){
-        $data = $orderItemRequest->all();
-        $order = $this->repository->find($data['order_id']);
-        $items = new $order->items;
-        print_r($items);
-        //return redirect()->route("admin.orders.index");
+    public function newItem($orderId){
+        $order = $this->repository->find($orderId);
+        $products = $this->productRepository->lists("name","id");
+        return view("admin.orders.orderItem.newItem", compact('order','products'));
     }
+
+    public function updateOrderTotal($orderId){
+        /**
+         * @Todo: Calcular total também levando em consideração a quantidade e produtos repetidos
+         */
+        $orderItems = $this->repository->findByField("order_id", $orderId, ['price']);
+        $total =0;
+        foreach($orderItems as $orderItem){
+            $total += $orderItem['price'];
+        }
+        $order = $this->orderRepository->find($orderId);
+        $order->total = $total;
+        $order->save();
+    }
+
 }
