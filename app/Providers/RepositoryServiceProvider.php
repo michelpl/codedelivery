@@ -28,8 +28,8 @@ class RepositoryServiceProvider extends ServiceProvider
             'CodeDelivery\Repositories\OrderRepositoryEloquent'
         );
         $this->app->bind(
-            'CodeDelivery\Repositories\OrdemItemRepository',
-            'CodeDelivery\Repositories\OrdemItemRepositoryEloquent'
+            'CodeDelivery\Repositories\OrderItemRepository',
+            'CodeDelivery\Repositories\OrderItemRepositoryEloquent'
         );
         $this->app->bind(
             'CodeDelivery\Repositories\ProductRepository',
