@@ -30,8 +30,13 @@ class OrderItemsController extends Controller
         $data = $request->all();
         $product = $this->productRepository->find($data['product_id']);
         $data['price'] = $product->price;
-        $data['qtde'] = 1;
-        $this->repository->create($data);
+        $data['qtd'] = 1;
+        $find = $this->repository->findByField("product_id",$product->id)->first();
+        if($find->count() >0){
+            $this->update($request, $find->id, ++$find->qtd);
+        }else{
+            $this->repository->create($data);
+        }
         $this->updateOrderTotal($data['order_id']);
 
         return redirect()->route('admin.orders.edit', $data['order_id']);
@@ -43,10 +48,11 @@ class OrderItemsController extends Controller
         return redirect()->route('admin.orders.index', $item->order_id);
 
     }
-    public function update(AdminOrderItemRequest $request, $id){
+    public function update(AdminOrderItemRequest $request, $id, $qtd = 1){
         $data = $request->all();
-        $this->repository->update($data, $id);
-        return redirect()->route('admin.orders.itens.index');
+        $data['qtd'] = $qtd;
+        $orderItem = $this->repository->update($data, $id);
+        return redirect()->route('admin.orders.edit', ['ID'=>$orderItem->order_id]);
     }
 
     public function newItem($orderId){
