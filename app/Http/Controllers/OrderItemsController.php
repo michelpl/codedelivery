@@ -32,7 +32,7 @@ class OrderItemsController extends Controller
         $data['price'] = $product->price;
         $data['qtd'] = 1;
         $find = $this->repository->findByField("product_id",$product->id)->first();
-        if($find->count() >0){
+        if(!empty($find)){
             $this->update($request, $find->id, ++$find->qtd);
         }else{
             $this->repository->create($data);
@@ -62,13 +62,10 @@ class OrderItemsController extends Controller
     }
 
     public function updateOrderTotal($orderId){
-        /**
-         * @Todo: Calcular total também levando em consideração a quantidade e produtos repetidos
-         */
-        $orderItems = $this->repository->findByField("order_id", $orderId, ['price']);
+        $orderItems = $this->repository->findByField("order_id", $orderId, ['price', "qtd"]);
         $total =0;
         foreach($orderItems as $orderItem){
-            $total += $orderItem['price'];
+            $total += $orderItem['price'] * $orderItem['qtd'];
         }
         $order = $this->orderRepository->find($orderId);
         $order->total = $total;
