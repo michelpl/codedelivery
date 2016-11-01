@@ -12,10 +12,13 @@
 */
 
 $factory->define(CodeDelivery\Models\User::class, function (Faker\Generator $faker) {
+    $roles = [0=>'client', 1=>"deliveryman", 2=>'client'];
+    $i = array_rand($roles,1);
     return [
         'name' => $faker->name,
         'email' => $faker->safeEmail,
         'password' => bcrypt(str_random(10)),
+        'role' => $roles[$i],
         'remember_token' => str_random(10),
     ];
 });
