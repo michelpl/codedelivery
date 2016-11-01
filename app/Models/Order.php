@@ -12,7 +12,7 @@ class Order extends Model implements Transformable
 
     protected $fillable = [
       'client_id'
-      ,'user_deliveryman_id'
+      ,'user_deliveryman'
       ,'total'
       ,'status'
     ];

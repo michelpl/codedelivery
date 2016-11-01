@@ -20,16 +20,18 @@ class OrdersController extends Controller
     private $orderItemRepository;
     private $userRepository;
     private $status = ['0'=>'Inativo','1'=>'Ativo'];
+    private $deliverymen;
 
 
-    public function __construct(OrderRepository $repository, UserRepository $UserRepository, ProductRepository $productRepository){
+    public function __construct(OrderRepository $repository, UserRepository $userRepository, ProductRepository $productRepository){
         $this->repository = $repository;
         $this->productRepository = $productRepository;
-        $this->UserRepository = $UserRepository;
+        $this->userRepository = $userRepository;
+        $this->deliverymen = $this->getDeliverymen();
     }
     
     public function index() {
-        echo  php_ini_loaded_file();
+        //echo  php_ini_loaded_file();
         $orders = $this->repository->paginate();
         $status = $this->status;
         return view("admin.orders.index", compact('orders', 'status'));
@@ -40,16 +42,22 @@ class OrdersController extends Controller
     }
     public function edit($id) {
         $order = $this->repository->find($id);
-        return view("admin.orders.edit", compact('order'));
+        $deliverymen = $this->deliverymen;
+        return view("admin.orders.edit", compact('order', 'deliverymen'));
     }
     public function store(AdminOrderRequest $orderRequest) {
         $data = $orderRequest->all();
+        if($data['user_deliveryman'] == 0){
+            unset($data['user_deliveryman']);
+        }
         $this->repository->create($data);
         return redirect()->route("admin.orders.index");
     }
     public function update(AdminOrderRequest $request, $id) {
         $data = $request->all();
-
+        if($data['user_deliveryman'] == 0){
+            unset($data['user_deliveryman']);
+        }
         $this->repository->update($data, $id);
         return redirect()->route("admin.orders.index");
     }
@@ -57,6 +65,14 @@ class OrdersController extends Controller
     public function destroy($id){
         $this->repository->delete($id);
         return redirect()->route("admin.orders.index");
+    }
+    private function getDeliveryMen(){
+
+        $deliverymen = $this->userRepository->findByField("role", "deliveryman")->lists('name', "id");
+        $deliverymen[0] = "Selecione";
+        $deliverymen = json_decode($deliverymen, true);
+        ksort($deliverymen);
+        return $deliverymen;
     }
 
 

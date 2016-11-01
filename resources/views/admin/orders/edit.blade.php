@@ -20,8 +20,9 @@
                 <th>Id</th>
                 <th>Produto</th>
                 <th>Categoria</th>
-                <th>Preço atual</th>
+                <th>Quantidade</th>
                 <th>Preço no pedido</th>
+                <th>Subtotal</th>
             </tr>
 
             <tbody>
@@ -31,19 +32,20 @@
                     <td>{{$item->id}}</td>
                     <td>{{$item->product->name}}</td>
                     <td>{{$item->product->category->name}}</td>
-                    <td>{{$item->product->price}}</td>
+                    <td>{{$item->qtd}}</td>
                     <td class="text-right">{{$item->price}}</td>
+                    <td>{{money_format('%.2n', ($item->price * $item->qtd))}}</td>
                     <td class="text-right"><a href="{{route('admin.orderItems.destroy',['id' =>$item->id])}}">Remover</a></td>
                 </tr>
             @endforeach
             <tr>
-                <td colspan="4">Total:</td>
+                <td colspan="5">Total:</td>
                 <td colspan="1" class="active text-right">R$ {{$order->total}}</td>
             </tr>
             </tbody>
         </table>
     @else
-        <p>Nenhum registro encontrado</p>
+        <p>Nenhum item encontrado</p>
     @endif
     <div class="form-group">
         {!! Form::submit('Salvar', ['class' => 'btn btn-primary', 'value' => 'Salvar'])  !!}

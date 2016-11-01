@@ -3,10 +3,8 @@
 @section('content')
     <div class="container">
         <h3>Pedidos</h3>
-        
-        
-        <p><a href="{{route('admin.orders.create')}}" class="btn btn-default">Novo pedido</a></p>
         <br>
+        @if(!empty($orders))
         <table class="table table-bordered">
             <tr>
                 <th>Id</th>
@@ -16,6 +14,7 @@
             </tr>
             
             <tbody>
+
                 @foreach($orders as $order)
                     <tr>
                         <td>{{$order->id}}</td>
@@ -29,6 +28,9 @@
                 
             </tbody>
         </table>
+        @else
+            <h3>Nenhum pedido encontrado</h3>
+        @endif
         {!! $orders->render() !!}
     </div>
     
