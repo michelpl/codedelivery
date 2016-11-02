@@ -1,35 +1,28 @@
 <div class="form-group">
-    {!! Form::label('name', 'Nome')  !!}
-    {!! Form::text('user[name]',$client->user->name, ['class' => 'form-control'])  !!}
-
+    {!! Form::label('User', 'Usuário:') !!}
+    {!! Form::text('user[name]', null, ['class' => 'form-control']) !!}
 </div>
 <div class="form-group">
-  {!! Form::label('Email', 'E-mail:')  !!}
-  {!! Form::email('user[email]',$client->user->email, ['class' => 'form-control'])  !!}
-
+    {!! Form::label('User', 'E-mail:') !!}
+    {!! Form::text('user[email]', null, ['class' => 'form-control']) !!}
 </div>
 <div class="form-group">
-    {!! Form::label('phone', 'Telefone')  !!}
-    {!! Form::text('phone',null, ['class' => 'form-control'])  !!}
-
+    {!! Form::label('Phone', 'Telefone:') !!}
+    {!! Form::text('phone', null, ['class' => 'form-control']) !!}
 </div>
 <div class="form-group">
-    {!! Form::label('Adress', 'Endereço')  !!}
-    {!! Form::text('adress',null, ['class' => 'form-control'])  !!}
-
+    {!! Form::label('Address', 'Endereço:') !!}
+    {!! Form::text('address', null, ['class' => 'form-control']) !!}
 </div>
 <div class="form-group">
-    {!! Form::label('City', 'Cidade')  !!}
-    {!! Form::text('city',null, ['class' => 'form-control'])  !!}
-
+    {!! Form::label('city', 'City:') !!}
+    {!! Form::text('city', null, ['class' => 'form-control']) !!}
 </div>
 <div class="form-group">
-    {!! Form::label('State', 'Estado:')  !!}
-    {!! Form::text('state',null, ['class' => 'form-control'])  !!}
-
+    {!! Form::label('State', 'Estado:') !!}
+    {!! Form::text('state', null, ['class' => 'form-control']) !!}
 </div>
 <div class="form-group">
-    {!! Form::label('Zipcode', 'CEP:')  !!}
-    {!! Form::text('zipcode',null, ['class' => 'form-control'])  !!}
-
+    {!! Form::label('Zipcode', 'CEP:') !!}
+    {!! Form::text('zipcode', null, ['class' => 'form-control']) !!}
 </div>

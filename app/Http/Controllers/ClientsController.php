@@ -35,13 +35,11 @@ class ClientsController extends Controller
     }
     public function store(AdminClientRequest $clientRequest) {
         $data = $clientRequest->all();
-        $user = $this->userRepository->create($data);
-        $data['user_id'] = $user->id;
-        $this->repository->create($data);
+        $user = $this->clientService->create($data);
         return redirect()->route("admin.clients.index");
     }
     public function update(AdminClientRequest $request, $id) {
-      
+
         $data = $request->all();
         $client = $this->clientService->update($data, $id);
         return redirect()->route("admin.clients.index");
