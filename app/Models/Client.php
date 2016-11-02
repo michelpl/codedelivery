@@ -13,12 +13,12 @@ class Client extends Model implements Transformable
     protected $fillable = [
       'user_id'
       ,'phone'
-      ,'adress'
+      ,'address'
       ,'city'
       ,'state'
       ,'zipcode'
     ];
-    
+
     public function user(){
         return $this->hasOne(User::class,'id','user_id');
     }
