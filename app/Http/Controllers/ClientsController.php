@@ -8,21 +8,24 @@ use CodeDelivery\Http\Requests\AdminClientRequest;
 use CodeDelivery\Repositories\ClientRepository;
 use CodeDelivery\Http\Controllers\Controller;
 use CodeDelivery\Repositories\UserRepository;
+use CodeDelivery\Services\ClientService;
 
 class ClientsController extends Controller
 {
     private $repository;
-    
-    public function __construct(ClientRepository $repository, UserRepository $userRepository) {
+    private $clientService;
+
+    public function __construct(ClientRepository $repository, UserRepository $userRepository, ClientService $clientService) {
         $this->repository = $repository;
         $this->userRepository = $userRepository;
+        $this->clientService = $clientService;
     }
-    
+
     public function index() {
         $clients = $this->repository->paginate();
         return view("admin.clients.index", compact('clients'));
     }
-    
+
     public function create() {
         return view("admin.clients.create");
     }
@@ -38,13 +41,11 @@ class ClientsController extends Controller
         return redirect()->route("admin.clients.index");
     }
     public function update(AdminClientRequest $request, $id) {
+      
         $data = $request->all();
-        $data['password'] = bcrypt($data['password']);
-        $client = $this->repository->update($data, $id);
-        $this->userRepository->update($data, $client->user_id);
-
+        $client = $this->clientService->update($data, $id);
         return redirect()->route("admin.clients.index");
-                
+
     }
 
     public function destroy($id){

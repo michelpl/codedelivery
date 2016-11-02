@@ -1,6 +1,11 @@
 <div class="form-group">
     {!! Form::label('name', 'Nome')  !!}
-    {!! Form::text('name',$client->user->name, ['class' => 'form-control'])  !!}
+    {!! Form::text('user[name]',$client->user->name, ['class' => 'form-control'])  !!}
+
+</div>
+<div class="form-group">
+  {!! Form::label('Email', 'E-mail:')  !!}
+  {!! Form::email('user[email]',$client->user->email, ['class' => 'form-control'])  !!}
 
 </div>
 <div class="form-group">
@@ -27,13 +32,4 @@
     {!! Form::label('Zipcode', 'CEP:')  !!}
     {!! Form::text('zipcode',null, ['class' => 'form-control'])  !!}
 
-</div>
-<div class="form-group">
-    {!! Form::label('Email', 'E-mail:')  !!}
-    {!! Form::email('email',$client->user->email, ['class' => 'form-control'])  !!}
-
-</div>
-<div class="form-group">
-    {!! Form::label('Password', 'Senha')  !!}
-    {!! Form::password('password',null, ['class' => 'form-control'])  !!}
 </div>
